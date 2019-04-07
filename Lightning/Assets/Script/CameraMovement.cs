@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class CameraMovement : MonoBehaviour
 {
-    public static CameraMovement instance;    
+    public static CameraMovement instance;
+    public LayerMask mask;
     private void Awake()
     {
         if(instance !=this || instance == null)
@@ -29,7 +30,7 @@ public class CameraMovement : MonoBehaviour
 
         Vector3 destPos = lightningBody.GetEndPosition() + new Vector3(0, 0, -10 - zFactor * lightningBody.GetABDistance());
 
-        transform.position = destPos;//Vector3.Lerp(transform.position, destPos, 2f * Time.deltaTime);
+        transform.position = Vector3.Lerp(transform.position, destPos, 2f * Time.deltaTime);
     }
 
     public Vector3 GetCursorInWorldPoint()
@@ -44,17 +45,17 @@ public class CameraMovement : MonoBehaviour
 
         Ray ray = new Ray(transform.position, (nearPoint - transform.position).normalized);
         RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, -transform.position.z + 5f))
+        if (Physics.Raycast(ray, out hit, -transform.position.z + 5f, mask))
         {
             Debug.DrawLine(transform.position, hit.point, Color.red);
             worldPoint = hit.point;
         }
 
 
-        GUILayout.BeginArea(new Rect(20, 20, 250, 120));
-        GUILayout.Label("Screen pixels: " + cam.pixelWidth + ":" + cam.pixelHeight);
-        GUILayout.Label("Mouse position: " + mousePos);
-        GUILayout.Label("World position: " + nearPoint.ToString("F3"));
-        GUILayout.EndArea();
+        //GUILayout.BeginArea(new Rect(20, 20, 250, 120));
+        //GUILayout.Label("Screen pixels: " + cam.pixelWidth + ":" + cam.pixelHeight);
+        //GUILayout.Label("Mouse position: " + mousePos);
+        //GUILayout.Label("World position: " + nearPoint.ToString("F3"));
+        //GUILayout.EndArea();
     }
 }

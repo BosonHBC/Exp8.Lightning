@@ -12,6 +12,7 @@ public class DynamicEndPosition : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        ltBody.SetEndPosition(transform.position);
     }
 
     // Update is called once per frame
@@ -24,7 +25,7 @@ public class DynamicEndPosition : MonoBehaviour
         {
             Vector3 destPos = CameraMovement.instance.GetCursorInWorldPoint();
             transform.position = Vector3.Lerp(transform.position, destPos, fMoveSpd* Time.deltaTime);
-            ltBody.destPosition = transform.position;
+            ltBody.SetEndPosition(transform.position);
             ltBody.SetLineTangent();
             Debug.DrawLine(transform.position, destPos, Color.red);
             if (Vector3.Distance(transform.position, destPos) < fDistThreshold)
